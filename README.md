@@ -1,21 +1,21 @@
 <p align="center">
-    <img src="https://i.imgur.com/JpkIhYH.png" />
+    <img src="https://github.com/gsilvestri/kapu-explorer/blob/master/KAPU_EXPLORER.jpg" />
 </p>
 
-[![Build Status](https://img.shields.io/travis/ArkEcosystem/ark-explorer/master.svg?style=flat)](https://travis-ci.org/ArkEcosystem/ark-explorer)
+[![Build Status](https://img.shields.io/travis/gsilvestri/kapu-explorer/master.svg?style=flat)](https://travis-ci.org/gsilvestri/kapu-explorer)
 
-# ARK Explorer 3.0
+# KAPU Explorer 3.0
 
 > Designed and developed from the ground-up, using lean & fast developmental frameworks (Tailwind CSS & Vue.JS).
 
-You can access it at [https://explorer.ark.io/](https://explorer.ark.io/).
+You can access it at [https://explorer.kapunode.net/](https://explorer.kapunode.net/).
 
 ## Build Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/ArkEcosystem/ark-explorer
+git clone https://github.com/gsilvestri/kapu-explorer
 ```
 
 ### 2. Install Dependencies
@@ -52,7 +52,7 @@ If you are going to host your explorer instance on GitHub Pages you will need to
 yarn build --base https://username.github.io/repository/
 ```
 
-A running instance of the explorer on GitHub Pages can be found at https://arkecosystem.github.io/.
+A running instance of the explorer on GitHub Pages can be found at https://gsilvestri.github.io/.
 
 > This step is not required if you are hosting the explorer on your "root" repository which is usually your username https://username.github.io/.
 
@@ -96,15 +96,16 @@ $ yarn test
 
 ## 7. Security
 
-If you discover a security vulnerability within this package, please send an e-mail to security@ark.io. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this package, please send an e-mail to security@kapu.one. All security vulnerabilities will be promptly addressed.
 
 ## 8. Credits
 
 - [Brian Faust](https://github.com/faustbrian)
 - [Lúcio Rubens](https://github.com/luciorubeens)
 - [Alex Barnsley](https://github.com/alexbarnsley)
+- [Giovanni Silvestri](https://github.com/gsilvestri)
 - [All Contributors](../../contributors)
 
 ## 9. License
 
-[MIT](LICENSE) © [ArkEcosystem](https://ark.io)
+[MIT](LICENSE) © [KAPU International](https://kapu.one)
