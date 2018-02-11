@@ -1,6 +1,6 @@
-![ArkExplorer](https://i.imgur.com/JpkIhYH.png)
+![KapuExplorer](https://github.com/gsilvestri/kapu-explorer/blob/2.0/KAPU_EXPLORER.jpg)
 
-[![Build Status](https://travis-ci.org/ArkEcosystem/ark-explorer.svg?branch=master)](https://travis-ci.org/ArkEcosystem/ark-explorer)
+[![Build Status](https://travis-ci.org/ArkEcosystem/ark-explorer.svg?branch=2.0)](https://travis-ci.org/ArkEcosystem/ark-explorer)
 
 # ARK Block Explorer
 
