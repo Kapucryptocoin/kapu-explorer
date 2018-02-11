@@ -24,7 +24,7 @@
       </template>
     </table-column>
 
-    <table-column show="amount" label="Amount (ARK)" header-class="right-header-cell" cell-class="right-cell">
+    <table-column show="amount" label="Amount (KAPU)" header-class="right-header-cell" cell-class="right-cell">
       <template slot-scope="row">
         <span :class="{
           'text-red': row.senderId === $route.params.address,
@@ -33,13 +33,13 @@
       </template>
     </table-column>
 
-    <table-column show="fee" label="Fee (ARK)" header-class="right-header-cell hidden md:table-cell" cell-class="right-cell hidden md:table-cell">
+    <table-column show="fee" label="Fee (KAPU)" header-class="right-header-cell hidden md:table-cell" cell-class="right-cell hidden md:table-cell">
       <template slot-scope="row">
         {{ readableCrypto(row.fee) }}
       </template>
     </table-column>
 
-    <table-column show="confirmations" label="Confirmations (ARK)" header-class="right-header-end-cell" cell-class="right-end-cell">
+    <table-column show="confirmations" label="Confirmations (KAPU)" header-class="right-header-end-cell" cell-class="right-end-cell">
       <template slot-scope="row">
         <div class="flex items-center justify-end whitespace-no-wrap">
           <div v-if="row.confirmations <= 52">

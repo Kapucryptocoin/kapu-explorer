@@ -30,13 +30,13 @@
       </template>
     </table-column>
 
-    <table-column show="totalForged" label="Reward (ARK)" header-class="right-header-cell" cell-class="right-cell">
+    <table-column show="totalForged" label="Reward (KAPU)" header-class="right-header-cell" cell-class="right-cell">
       <template slot-scope="row">
         {{ readableCrypto(row.totalForged) }}
       </template>
     </table-column>
 
-    <table-column show="totalFee" label="Fee (ARK)" header-class="right-header-end-cell" cell-class="right-end-cell">
+    <table-column show="totalFee" label="Fee (KAPU)" header-class="right-header-end-cell" cell-class="right-end-cell">
       <template slot-scope="row">
         {{ readableCrypto(row.totalFee) }}
       </template>

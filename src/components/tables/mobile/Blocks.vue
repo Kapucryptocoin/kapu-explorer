@@ -27,12 +27,12 @@
       </div>
 
       <div class="list-row-border-b">
-        <div>Amount (ARK)</div>
+        <div>Amount (KAPU)</div>
         <div>{{ readableCrypto(block.totalForged) }}</div>
       </div>
 
       <div class="list-row">
-        <div>Fee (ARK)</div>
+        <div>Fee (KAPU)</div>
         <div>{{ readableCrypto(block.totalFee) }}</div>
       </div>
     </div>

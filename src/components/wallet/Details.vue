@@ -100,7 +100,7 @@
         </div>
         <div class="flex -mx-6">
           <div class="w-1/2 px-6 w-full border-r border-grey-dark">
-            <div class="text-grey mb-2">Balance (ARK)</div>
+            <div class="text-grey mb-2">Balance (KAPU)</div>
             <div class="text-white">{{ readableCrypto(wallet.balance, false) }}</div>
           </div>
           <div class="w-1/2 px-6 w-full">
