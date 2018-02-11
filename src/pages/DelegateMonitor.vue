@@ -9,16 +9,16 @@
         <div
           @click="activeTab = 'active'"
           :class="[
-            activeTab === 'active' ? 'text-lg sm:text-2xl border-blue text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-blue'
+            activeTab === 'active' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-brown'
           ]">
           Active
         </div>
         <div
           @click="activeTab = 'standby'"
           :class="[
-            activeTab === 'standby' ? 'text-lg sm:text-2xl border-blue text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-blue'
+            activeTab === 'standby' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-brown'
           ]">
           Standby
         </div>

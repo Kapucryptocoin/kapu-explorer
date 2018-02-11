@@ -8,7 +8,7 @@
   --color-theme-text-thead: #C5C7CB;
   --color-theme-table-row-sticky: #fff;
 
-  --color-theme-page-background-primary: #f5f6fa;
+  --color-theme-page-background-primary: #ebcfa6;
   --color-theme-content-background-primary: #fff;
   --color-theme-feature-background: #20222d;
   --color-theme-table-row: #f8f9fd;
@@ -28,8 +28,8 @@
   --ark-meter: #e4ece9;
   --chart-active: #395174;
   --chart-inactive: #a0a6c8;
-  --theme-button: #e0f0fd;
-  --theme-button-text: #037cff;
+  --theme-button: #f9ead5;
+  --theme-button-text: #AB8B64;
 }
 
 .theme-light footer a {
@@ -85,12 +85,12 @@
 }
 
 a {
-  color: #3790ff;
+  color: #AB8B64;
   text-decoration: none;
 }
 
 a:hover {
-  color: #1461ff;
+  color: #F57C00;
 }
 
 table {
@@ -202,7 +202,7 @@ thead th {
 }
 
 .show-more-button:hover {
-  @apply .bg-blue .text-white .hover-button-shadow-definition
+  @apply .bg-brown .text-white .hover-button-shadow-definition
 }
 
 .page-section {

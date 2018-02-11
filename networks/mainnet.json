@@ -1,6 +1,6 @@
 {
   "title": "KAPU Explorer",
-  "server": "https://api.kapunode.net",
+  "server": "https://api.kapunode.net/api",
   "alias": "Main",
   "activeDelegates": 51,
   "currencies": {

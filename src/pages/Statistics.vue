@@ -6,24 +6,24 @@
         <div
           @click="activeTab = 'transactions'"
           :class="[
-            activeTab === 'transactions' ? 'text-lg sm:text-2xl border-blue text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-blue'
+            activeTab === 'transactions' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-brown'
           ]">
           Transactions
         </div>
         <div
           @click="activeTab = 'sent'"
           :class="[
-            activeTab === 'sent' ? 'text-lg sm:text-2xl border-blue text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-blue'
+            activeTab === 'sent' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-brown'
           ]">
           ARK sent
         </div>
         <div
           @click="activeTab = 'fees'"
           :class="[
-            activeTab === 'fees' ? 'text-lg sm:text-2xl border-blue text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-blue'
+            activeTab === 'fees' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-brown'
           ]">
           ARK fees
         </div>

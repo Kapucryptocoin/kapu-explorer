@@ -6,24 +6,24 @@
         <div
           @click="type = 'all'"
           :class="[
-            type === 'all' ? 'text-2xl border-blue text-theme-text-primary' : 'text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-blue'
+            type === 'all' ? 'text-2xl border-brown text-theme-text-primary' : 'text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-brown'
           ]">
           All
         </div>
         <div
           @click="type = 'sent'"
           :class="[
-            type === 'sent' ? 'text-2xl border-blue text-theme-text-primary' : 'text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-blue'
+            type === 'sent' ? 'text-2xl border-brown text-theme-text-primary' : 'text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-brown'
           ]">
           Sent
         </div>
         <div
           @click="type = 'received'"
           :class="[
-            type === 'received' ? 'text-2xl border-blue text-theme-text-primary' : 'text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-blue'
+            type === 'received' ? 'text-2xl border-brown text-theme-text-primary' : 'text-lg text-theme-text-secondary border-transparent',
+            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-brown'
           ]">
           Received
         </div>
