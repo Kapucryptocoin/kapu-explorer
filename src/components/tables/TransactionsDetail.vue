@@ -39,7 +39,7 @@
       </template>
     </table-column>
 
-    <table-column show="confirmations" label="Confirmations (KAPU)" header-class="right-header-end-cell" cell-class="right-end-cell">
+    <table-column show="confirmations" label="Confirmations" header-class="right-header-end-cell" cell-class="right-end-cell">
       <template slot-scope="row">
         <div class="flex items-center justify-end whitespace-no-wrap">
           <div v-if="row.confirmations <= 52">
