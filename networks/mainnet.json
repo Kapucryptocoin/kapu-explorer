@@ -1,7 +1,7 @@
 {
   "title": "KAPU Explorer",
-  "server": "http://51.15.198.173:4600/api",
-  "alias": "Main",
+  "server": "https://api.kapunode.net/api",
+"alias": "Main",
   "activeDelegates": 51,
   "currencies": {
     "AUD": "A$",
