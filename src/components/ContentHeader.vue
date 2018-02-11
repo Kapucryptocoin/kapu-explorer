@@ -6,7 +6,7 @@
         <div class="pr-6">Height: {{ height.toLocaleString() }}</div>
         <div class="pr-6">Network: {{ alias }}</div>
         <div class="pr-6">Supply: {{ readableCrypto(supply) }}</div>
-        <div>Market Cap: <currency :amount="+supply"></currency></div>
+        <!-- div>Market Cap: <currency :amount="+supply"></currency></div -->
       </div>
     </div>
     <div class="sm:hidden flex items-center justify-between text-theme-text-tertiary text-2xs px-5 sm:px-8 xl:px-6 py-3 bg-stat-background">
