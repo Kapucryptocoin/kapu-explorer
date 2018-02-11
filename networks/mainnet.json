@@ -1,6 +1,6 @@
 {
   "title": "KAPU Explorer",
-  "server": "https://api.kapunode.net/api",
+  "server": "http://51.15.198.173:4600/api",
   "alias": "Main",
   "activeDelegates": 51,
   "currencies": {
@@ -23,7 +23,9 @@
   },
   "knownWallets": {
     "KDn3WyMCHzfhtpzaiUmb4GJLyFPrcaF5Kn": "Reserve",
-    "KJQNgePukpFY3dzT5SVibF57TdFYtgw6qA": "ARK Team"
+    "KJQNgePukpFY3dzT5SVibF57TdFYtgw6qA": "ARK Team",
+    "KViFSsTzbszDcaJ1CVr5F7XwqMnBMFmw4q": "gsilvestri",
+    "KGg1nGgqqbLyoPkvkvE2NySYRRo35sZ1Bf": "gsilvestri"
   },
   "defaults": {
     "currency": {
