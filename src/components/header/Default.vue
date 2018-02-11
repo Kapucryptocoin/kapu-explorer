@@ -32,12 +32,6 @@
         </label>
       </div>
 
-      <span class="border-r mx-2 md:mx-4 lg:mx-6 my-4 block" v-if="shouldDisplayCurrency"></span>
-      <toggle-currency v-if="shouldDisplayCurrency"></toggle-currency>
-
-      <span class="border-r mx-2 md:mx-4 lg:mx-6 my-4 hidden md:block" v-if="shouldDisplayChart"></span>
-      <toggle-chart v-if="shouldDisplayChart"></toggle-chart>
-
       <span class="border-r mx-2 md:mx-4 lg:mx-6 my-4"></span>
       <toggle-theme></toggle-theme>
     </div>
