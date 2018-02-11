@@ -4,16 +4,12 @@ import { environment } from '../environments/environment';
 const mainNet: Network = {
   name: 'MAINNET',
   displayName: 'Mainnet',
-  node: 'https://explorer.ark.io:8443/api',
-  nethash: '6e84d08bd299ed97c212c886c98a57e36545c8f5d645ca7eeae63a8bd62d8988',
-  currencies: ['ARK', 'BTC', 'USD', 'EUR', 'GBP', 'CNY', 'KRW'],
+  node: 'https://api.kapunode.net/api',
+  nethash: '313ea34c8eb705f79e7bc298b788417ff3f7116c9596f5c9875e769ee2f4ede1',
+  currencies: ['KAPU', 'BTC', 'USD', 'EUR', 'GBP', 'CNY', 'KRW'],
   knownAddresses: {
-    'AFrPtEmzu6wdVpa2CnRDEKGQQMWgq8nE9V': 'Binance',
-    'AJbmGnDAx9y91MQCDApyaqZhn6fBvYX9iJ': 'Cryptopia',
-    'ALgvTAoz5Vi9easHqBK6aEMKatHb4beCXm': 'ARK Shield',
-    'AUDud8tvyVZa67p3QY7XPRUTjRGnWQQ9Xv': 'ARK Team',
-    'AUexKjGtgsSpVzPLs6jNMM6vJ6znEVTQWK': 'Bittrex',
-    'AeUyEH2UGpYrwHAupBh7syFhWYSBNFAkap' : 'OKEx'
+    'KDn3WyMCHzfhtpzaiUmb4GJLyFPrcaF5Kn': 'Reserve',
+    'KJQNgePukpFY3dzT5SVibF57TdFYtgw6qA': 'ARK Team'
   },
   properties: {}
 };
