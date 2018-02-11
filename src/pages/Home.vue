@@ -2,7 +2,7 @@
   <div class="max-w-2xl mx-auto md:pt-5">
     <content-header>Latest transactions and blocks</content-header>
 
-    <section v-if="priceChart" class="hidden md:block mb-5 bg-theme-feature-background xl:rounded-lg">
+    <section v-if="shouldDisplayChart" class="hidden md:block mb-5 bg-theme-feature-background xl:rounded-lg">
       <chart-wrapper></chart-wrapper>
     </section>
 
@@ -51,7 +51,11 @@ export default {
   }),
 
   computed: {
+    ...mapGetters('network', { networkDefaults: 'defaults' }),
     ...mapGetters('ui', ['priceChart']),
+    shouldDisplayChart() {
+      return this.$route.name === 'home' && this.networkDefaults.config.priceChart
+    },
   },
 }
 </script>

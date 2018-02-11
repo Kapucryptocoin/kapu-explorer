@@ -32,6 +32,6 @@
     }
   },
   "config": {
-    "priceChart": true
+    "priceChart": false
   }
 }
