@@ -1,5 +1,5 @@
 {
-  "name": "ark-explorer",
+  "name": "kapu-explorer",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -28,7 +28,7 @@
     "angular-highcharts": "^5.2.1",
     "angular2-moment": "^1.7.1",
     "angular2-qrcode": "^2.0.1",
-    "ark-ts": "^0.3.5",
+    "kapu-ts": "^0.2.4",
     "axios": "^0.17.1",
     "core-js": "^2.4.1",
     "express": "^4.16.2",

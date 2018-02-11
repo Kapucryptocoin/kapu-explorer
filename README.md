@@ -1,33 +1,33 @@
 ![KapuExplorer](https://github.com/gsilvestri/kapu-explorer/blob/2.0/KAPU_EXPLORER.jpg)
 
-[![Build Status](https://travis-ci.org/ArkEcosystem/ark-explorer.svg?branch=2.0)](https://travis-ci.org/ArkEcosystem/ark-explorer)
+[![Build Status](https://travis-ci.org/gsilvestri/kapu-explorer.svg?branch=2.0)](https://travis-ci.org/gsilvestri/kapu-explorer)
 
-# ARK Block Explorer
+# KAPU Block Explorer
 
-> A redesigned frontend of ARK Blockchain Explorer using AngularJS and TypeScript.
+> A redesigned frontend of KAPU Blockchain Explorer using AngularJS and TypeScript.
 
-You can access it at [https://explorer.ark.io/](https://explorer.ark.io/).
+You can access it at [https://explorer.kapunode.net/](https://explorer.kapunode.net/).
 
 The feel of the [old explorer](https://github.com/ArkEcosystem/old-ark-explorer) is retained in the new version, under the hood things are completely revamped. The frontend of the Explorer itself has been redone using [AngularJS framework](https://angular.io) and [TypeScript programming language](http://www.typescriptlang.org/).
 
 ## Installation
 
 ```bash
-git clone https://github.com/ArkEcosystem/ark-explorer.git
-cd ark-explorer
+git clone https://github.com/gsilvestri/kapu-explorer.git
+cd kapu-explorer
 npm install
 ```
 
-You will want to edit the config file [src/app/app.config.ts](https://github.com/ArkEcosystem/ark-explorer/blob/master/src/app/app.config.ts) depending on whether you want **MAINNET** or **DEVNET**. If you are pointing your explorer instance to your own ARK node, update the **NODE** property.
+You will want to edit the config file [src/app/app.config.ts](https://github.com/gsilvestri/kapu-explorer/blob/master/src/app/app.config.ts) depending on whether you want **MAINNET** or **DEVNET**. If you are pointing your explorer instance to your own KAPU node, update the **NODE** property.
 
-#### Custom ARK node
+#### Custom KAPU node
 
-Due to performance factors, the explorer works best when pointing to a specific version of the ARK node **which is not forging**.
+Due to performance factors, the explorer works best when pointing to a specific version of the KAPU node **which is not forging**.
 
-Once you have setup your explorer and given it the address for the node API, you will want to go into the ark-node directory and change the branch. On the machine that is running your ARK node, run the following commands:
+Once you have setup your explorer and given it the address for the node API, you will want to go into the kapu-node directory and change the branch. On the machine that is running your KAPU node, run the following commands:
 
 ```bash
-cd ~/ark-node
+cd ~/kapu-node
 git pull
 git checkout explorer
 ```
@@ -52,10 +52,11 @@ Before running the tests make sure you are serving the app via `ng serve`
 ## Contributing
 
 * If you find any bugs, submit an [issue](../../issues) or open [pull-request](../../pulls), helping us catch and fix them.
-* Engage with other users and developers on [ARK Slack](https://ark.io/slack/).
+* Engage with other users and developers on [KAPU Slack](https://slack.kapu.one).
 * Join the #development channel on Slack or contact our developer Lúcio (@lorenzo).
+- [Giovanni Silvestri](https://github.com/gsilvestri)
 * [Contribute bounties](./CONTRIBUTING.md).
 
 ## License
 
-ARK Explorer is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+KAPU Explorer is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
