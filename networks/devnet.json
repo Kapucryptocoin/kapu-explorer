@@ -1,6 +1,6 @@
 {
   "title": "DKAPU Explorer",
-  "server": "https://dexplorer.ark.io:8443/api",
+  "server": "https://api.devnet.kapunode.net/api",
   "alias": "Development",
   "activeDelegates": 51,
   "currencies": [],
