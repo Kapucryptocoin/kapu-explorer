@@ -4,7 +4,9 @@
   "alias": "Development",
   "activeDelegates": 51,
   "currencies": [],
-  "knownWallets": {},
+  "knownWallets": {
+    "ZH47F2edH3gLVtTgavQm9jmM8QTdmBpeCW": "Reserve"
+  },
   "defaults": {
     "currency": null
   },
