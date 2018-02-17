@@ -79,9 +79,11 @@ export default {
     },
 
     lastForgingTime(delegate) {
-      return this.readableTimestampAgo(
-        delegate.forgingStatus.lastBlock.timestamp
-      )
+      var timestampTemp = 0
+      if (delegate.forgingStatus.lastBlock !== null) {
+          timestampTemp = delegate.forgingStatus.lastBlock.timestamp
+      }
+      return this.readableTimestampAgo(timestampTemp)
     },
 
     statusMessage(row) {
