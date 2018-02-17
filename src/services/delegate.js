@@ -145,7 +145,9 @@ class DelegateService {
             let lastBlock = results[index]
 
             result.blocks = [lastBlock]
-            result.blocksAt = lastBlock.timestamp
+            if (lastBlock !== undefined) {
+              result.blocksAt = lastBlock.timestamp
+            }
 
             return result
           })
