@@ -1,6 +1,4 @@
-<p align="center">
-    <img src="https://github.com/gsilvestri/kapu-explorer/blob/master/KAPU_EXPLORER.jpg" />
-</p>
+![KAPU Explorer](https://github.com/gsilvestri/kapu-explorer/blob/master/KAPU_EXPLORER.jpg)
 
 [![Build Status](https://img.shields.io/travis/gsilvestri/kapu-explorer/master.svg?style=flat)](https://travis-ci.org/gsilvestri/kapu-explorer)
 
