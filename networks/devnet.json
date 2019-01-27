@@ -3,14 +3,15 @@
   "server": "https://api.devnet.kapunode.net/api",
   "alias": "Development",
   "activeDelegates": 51,
+  "rewardOffset": 10800,
   "currencies": [],
   "knownWallets": {
     "ZH47F2edH3gLVtTgavQm9jmM8QTdmBpeCW": "Reserve"
   },
   "defaults": {
-    "currency": null
-  },
-  "config": {
+    "token": "DKAPU",
+    "symbol": "Dʞ",
+    "currency": null,
     "priceChart": false
   }
 }

@@ -3,24 +3,23 @@
     nightMode ? 'theme-dark' : 'theme-light',
     'bg-theme-page-background text-theme-text-content min-h-screen font-sans xl:pt-8'
   ]">
-
     <app-header></app-header>
 
     <router-view></router-view>
 
     <app-footer></app-footer>
-
   </main>
 </template>
 
 <script type="text/ecmascript-6">
 import AppHeader from '@/components/header/Main'
 import AppFooter from '@/components/Footer'
-import CoinMarketCapService from '@/services/coin-market-cap'
+import CryptoCompareService from '@/services/crypto-compare'
 import BlockService from '@/services/block'
 import DelegateService from '@/services/delegate'
 import LoaderService from '@/services/loader'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 import '@/styles/style.css'
 
@@ -28,17 +27,24 @@ export default {
   components: { AppHeader, AppFooter },
 
   data: () => ({
-    timer: null,
+    currencyTimer: null,
+    networkTimer: null
   }),
 
-  created() {
+  async created() {
     const network = require(`../networks/${process.env.EXPLORER_CONFIG}`)
 
-    this.$store.dispatch('network/setDefaults', network)
+    this.$store.dispatch(
+      'ui/setNightMode',
+      localStorage.getItem('nightMode') || ((network.alias === 'Development') ? true : false)
+    )
+
+    this.$store.dispatch('network/setDefaults', network.defaults)
 
     this.$store.dispatch('network/setServer', network.server)
     this.$store.dispatch('network/setAlias', network.alias)
     this.$store.dispatch('network/setActiveDelegates', network.activeDelegates)
+    this.$store.dispatch('network/setRewardOffset', network.rewardOffset)
     this.$store.dispatch('network/setCurrencies', network.currencies)
     this.$store.dispatch('network/setKnownWallets', network.knownWallets)
 
@@ -54,32 +60,32 @@ export default {
       )
     }
 
-    LoaderService.config().then(response => {
-      this.$store.dispatch('network/setToken', response.token)
-      this.$store.dispatch('network/setSymbol', response.symbol)
-      this.$store.dispatch('network/setNethash', response.nethash)
+    const response = await LoaderService.config()
+    this.$store.dispatch('network/setToken', response.token)
+    this.$store.dispatch('network/setSymbol', response.symbol)
+    this.$store.dispatch('network/setNethash', response.nethash)
 
-      this.$store.dispatch(
-        'ui/setLanguage',
-        localStorage.getItem('language') || 'en'
-      )
+    this.$store.dispatch(
+      'ui/setLanguage',
+      localStorage.getItem('language') || 'en-gb'
+    )
 
-      this.$store.dispatch(
-        'ui/setPriceChart',
-        localStorage.getItem('priceChart') || network.config.priceChart
-      )
+    this.$store.dispatch(
+      'ui/setLocale',
+      localStorage.getItem('locale') || navigator.language || 'en-gb'
+    )
 
-      this.$store.dispatch(
-        'ui/setNightMode',
-        localStorage.getItem('nightMode') || false
-      )
+    this.$store.dispatch(
+      'ui/setPriceChart',
+      localStorage.getItem('priceChart') || network.defaults.priceChart
+    )
 
-      this.updateCurrencyRate()
-      this.updateSupply()
-      this.updateHeight()
-      this.updateDelegates()
-      this.updateForged()
-    })
+    this.updateI18n()
+    this.updateLocale()
+    this.updateCurrencyRate()
+    this.updateSupply()
+    this.updateHeight()
+    this.updateDelegates()
   },
 
   mounted() {
@@ -88,60 +94,65 @@ export default {
 
   computed: {
     ...mapGetters('currency', { currencyName: 'name' }),
-    ...mapGetters('ui', ['nightMode']),
+    ...mapGetters('ui', ['language', 'locale', 'nightMode']),
     ...mapGetters('network', ['token']),
   },
 
   methods: {
     prepareComponent() {
-      this.initialiseTimer()
+      this.initialiseTimers()
     },
 
-    updateCurrencyRate() {
+    async updateCurrencyRate() {
       if (this.currencyName !== this.token) {
-        CoinMarketCapService.price(this.currencyName).then(rate => {
-          this.$store.dispatch('currency/setRate', rate)
-        })
+        const rate = await CryptoCompareService.price(this.currencyName)
+        this.$store.dispatch('currency/setRate', rate)
       }
     },
 
-    updateSupply() {
-      BlockService.supply().then(supply =>
-        this.$store.dispatch('network/setSupply', supply)
-      )
+    async updateSupply() {
+      const supply = await BlockService.supply()
+      this.$store.dispatch('network/setSupply', supply)
     },
 
-    updateHeight() {
-      BlockService.height().then(height =>
-        this.$store.dispatch('network/setHeight', height)
-      )
+    async updateHeight() {
+      const height = await BlockService.height()
+      this.$store.dispatch('network/setHeight', height)
     },
 
-    updateDelegates() {
-      DelegateService.all().then(delegates => {
-        this.$store.dispatch('delegates/setDelegates', delegates)
-      })
+    async updateDelegates() {
+      const delegates = await DelegateService.all()
+      this.$store.dispatch('delegates/setDelegates', delegates)
     },
 
-    updateForged() {
-      DelegateService.forged().then(response => {
-        this.$store.dispatch('delegates/setForged', response)
-      })
+    updateI18n() {
+      this.$i18n.locale = this.language
     },
 
-    initialiseTimer() {
-      this.timer = setInterval(() => {
+    updateLocale() {
+      moment.locale(this.locale)
+    },
+
+    initialiseTimers() {
+      this.currencyTimer = setInterval(() => {
         this.updateCurrencyRate()
+      }, 5 * 60 * 1000)
+
+      this.networkTimer = setInterval(() => {
         this.updateSupply()
         this.updateHeight()
         this.updateDelegates()
-        this.updateForged()
-      }, 5 * 60 * 1000)
+      }, 8 * 1000)
     },
+
+    clearTimers() {
+      clearInterval(this.currencyTimer)
+      clearInterval(this.networkTimer)
+    }
   },
 
   beforeDestroy() {
-    clearInterval(this.timer)
+    this.clearTimers()
   },
 }
 </script>

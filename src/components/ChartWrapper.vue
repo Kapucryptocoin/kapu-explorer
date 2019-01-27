@@ -1,17 +1,29 @@
 <template>
-  <div>
-    <div class="flex justify-between px-10 py-8">
-      <h2 class="text-white m-0 text-xl font-normal">Price in {{ currencyName }}</h2>
-      <div>
-        <button @click="period('day')"  :class="{ 'bg-blue-darker text-white': type === 'day' }" class="py-2 px-4 bg-transparent hover:bg-blue-darker rounded-md hover:text-white text-blue-light font-normal text-xs">Day</button>
-        <button @click="period('week')"  :class="{ 'bg-blue-darker text-white': type === 'week' }" class="py-2 px-4 bg-transparent hover:bg-blue-darker rounded-md hover:text-white text-blue-light font-normal text-xs">Week</button>
-        <button @click="period('month')"  :class="{ 'bg-blue-darker text-white': type === 'month' }" class="py-2 px-4 bg-transparent hover:bg-blue-darker rounded-md hover:text-white text-blue-light font-normal text-xs">Month</button>
-        <button @click="period('quarter')"  :class="{ 'bg-blue-darker text-white': type === 'quarter' }" class="py-2 px-4 bg-transparent hover:bg-blue-darker rounded-md hover:text-white text-blue-light font-normal text-xs">Quarter</button>
-        <button @click="period('year')"  :class="{ 'bg-blue-darker text-white': type === 'year' }" class="py-2 px-4 bg-transparent hover:bg-blue-darker rounded-md hover:text-white text-blue-light font-normal text-xs">Year</button>
-      </div>
+  <div class="relative">
+    <div v-if="hasError" class="absolute pin flex flex-col items-center justify-center text-white z-10">
+      <p class="mb-4">
+        {{ $t('The chart data could not be loaded') }}
+      </p>
+      <button @click="renderChart" :disabled="isLoading" class="mt-4 pager-button items-center">
+        <span>{{ !isLoading ? $t('Reload chart') : $t('Loading...') }}</span>
+      </button>
     </div>
 
-    <price-chart :chartData="chartData" :options="options" :height="314"></price-chart>
+    <div :key="componentKey" :class="{ 'blur': hasError }">
+
+      <div class="flex justify-between items-center px-10 py-8">
+        <h2 class="text-white m-0 text-xl font-normal">{{ $t("Price in") }} {{ currencyName }}</h2>
+        <div>
+          <button @click="period('day')"  :class="{ 'chart-tab-active': type === 'day' }" class="chart-tab">{{ $t("Day") }}</button>
+          <button @click="period('week')"  :class="{ 'chart-tab-active': type === 'week' }" class="chart-tab">{{ $t("Week") }}</button>
+          <button @click="period('month')"  :class="{ 'chart-tab-active': type === 'month' }" class="chart-tab">{{ $t("Month") }}</button>
+          <button @click="period('quarter')"  :class="{ 'chart-tab-active': type === 'quarter' }" class="chart-tab">{{ $t("Quarter") }}</button>
+          <button @click="period('year')"  :class="{ 'chart-tab-active': type === 'year' }" class="chart-tab">{{ $t("Year") }}</button>
+        </div>
+      </div>
+
+      <price-chart :chartData="chartData" :options="options" :height="314"></price-chart>
+    </div>
   </div>
 </template>
 
@@ -22,15 +34,28 @@ import { mapGetters } from 'vuex'
 import store from '@/store'
 
 export default {
-  components: {PriceChart},
+  components: {
+    PriceChart
+  },
 
   data: () => ({
+    error: null,
+    isLoading: false,
     type: 'day',
-    chartData: {},
+    componentKey: 0,
+    labels: [],
+    datasets: [],
     options: {
       showScale: true,
       responsive: true,
       maintainAspectRatio: false,
+      hover: {
+          intersect: false
+      },
+      animation: {
+          duration: 0
+      },
+      responsiveAnimationDuration: 0,
       legend: {
         display: false,
       },
@@ -66,14 +91,6 @@ export default {
         ],
         xAxes: [
           {
-            // type: 'time',
-            // time: {
-            //   unit: 'day',
-            //   unitStepSize: 1,
-            //   displayFormats: {
-            //     day: 'MMM D',
-            //   },
-            // },
             gridLines: {
               display: true,
               color: '#282b38',
@@ -95,6 +112,7 @@ export default {
         bodyFontSize: 14,
         xPadding: 14,
         yPadding: 14,
+        caretPadding: 20,
         displayColors: false,
         mode: 'index',
         intersect: false,
@@ -103,9 +121,13 @@ export default {
         callbacks: {
           title: tooltipItem => {
             const name = store.getters['currency/name']
-            const symbol = store.getters['currency/symbol']
+            const token = store.getters['currency/symbol']
 
-            return `${symbol} ${tooltipItem[0].yLabel} ${name}`
+            if ([token, 'BTC', 'ETH', 'LTC'].some(c => name.indexOf(c) > -1)) {
+              return `${name} ${Number(tooltipItem[0].yLabel).toFixed(8)}`
+            }
+
+            return `${name} ${Number(tooltipItem[0].yLabel).toFixed(2)}`
           },
           label: tooltipItem => ''
           // label: tooltipItem => `BTC ${tooltipItem.yLabel}`
@@ -116,9 +138,33 @@ export default {
 
   computed: {
     ...mapGetters('currency', { currencyName: 'name' }),
+    ...mapGetters('network', ['token']),
+
+    chartData() {
+      return {
+        labels: this.labels,
+        datasets: [{
+          type: 'line',
+          pointHoverBackgroundColor: '#fff',
+          borderColor: '#535972',
+          pointHoverBorderColor: '#037cff',
+          pointBackgroundColor: 'rgba(0,0,0,0)',
+          pointBorderColor: 'rgba(0,0,0,0)',
+          pointHoverRadius: 7,
+          pointHoverBorderWidth: 4,
+          fill: false,
+          data: this.datasets
+        }]
+      }
+    },
+
+    hasError() {
+      return !!this.error
+    }
   },
 
   mounted() {
+    window.addEventListener('resize', this.handleResize)
     this.prepareComponent()
   },
 
@@ -133,33 +179,28 @@ export default {
     period(type) {
       this.type = type
 
-      this.renderChart()
+      if (!!this.token) {
+        this.renderChart()
+      }
     },
 
-    renderChart(type) {
-      CryptoCompareService[this.type]().then(response => {
-        this.chartData = {
-          labels: response.labels,
-          datasets: [{
-            type: 'line',
-            pointHoverBackgroundColor: '#fff',
-            borderColor: '#535972',
-            pointHoverBorderColor: '#037cff',
-            pointBackgroundColor: 'rgba(0,0,0,0)',
-            pointBorderColor: 'rgba(0,0,0,0)',
-            pointHoverRadius: 5,
-            pointHoverBorderWidth: 4,
-            fill: false,
-            // data: this.chartData.map((point, index) => {
-            //   return {
-            //     t: this.labels[index],
-            //     y: point,
-            //   }
-            // }),
-            data: response.datasets
-          }],
-        }
-      })
+    async renderChart(type) {
+      this.isLoading = true
+
+      try {
+        const response = await CryptoCompareService[this.type]()
+        this.labels = response.labels
+        this.datasets = response.datasets
+
+        this.error = null
+      } catch(error) {
+        this.labels = []
+        this.datasets = []
+
+        this.error = error
+      } finally {
+        this.isLoading = false
+      }
     },
 
     watchCurrencyName() {
@@ -169,6 +210,18 @@ export default {
     watchNetworkToken() {
       this.$store.watch((state) => state.network.token, (value) => this.renderChart())
     },
+
+    handleResize() {
+      // trick to re-mount the chart on resize
+      // https://stackoverflow.com/questions/47459837/how-to-re-mount-a-component
+      this.componentKey++
+    },
   }
 }
 </script>
+
+<style>
+.blur {
+  filter: blur(4px)
+}
+</style>

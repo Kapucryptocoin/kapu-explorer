@@ -1,68 +1,155 @@
 <template>
   <div class="w-full flex items-center px-5 sm:px-10">
-    <button @click="$store.dispatch('ui/setHeaderType', null)">
+    <button @click="$store.dispatch('ui/setHeaderType', null)" class="flex flex-none p-2">
       <img src="@/assets/images/icons/cross.svg" />
     </button>
 
-    <label for="search" class="hidden">Search</label>
+    <label for="search" class="hidden">{{ $t("Search") }}</label>
 
     <input
       type="search"
       ref="search"
-      placeholder="Find a block, transaction, address or delegate"
+      :placeholder=placeholder
       class="search-input w-full flex-auto mr-2 py-4 pl-4 bg-transparent"
       :class="{ 'text-grey': nightMode }"
       v-model="query"
-      @input="search" />
+      v-tooltip="{ show: nothingFound, content: $t('Nothing matched your search'), trigger: 'manual', placement: 'bottom-start', classes: 'search-tip' }"
+      @keyup.enter="search" />
 
-    <div class="search-icon text-grey hover:text-blue p-3 md:p-4" @click="search">
+    <button
+      class="search-icon text-grey hover:text-blue p-3 md:p-4 transition"
+      :disabled="!hasInput"
+      @click="search"
+    >
       <svg class="fill-current" width="20" height="20" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1216 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"/></svg>
-    </div>
+    </button>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import SearchService from '@/services/search'
-import _ from 'lodash'
 import { mapGetters } from 'vuex'
 
 export default {
-  data: () => ({ query: null }),
+  data: () => ({
+    query: null,
+    nothingFound: false,
+    searchCount: 0,
+    placeholder: 'Search'
+  }),
 
   computed: {
+    ...mapGetters('delegates', ['delegates']),
     ...mapGetters('ui', ['nightMode']),
+    ...mapGetters('network', ['knownWallets']),
+
+    hasInput() {
+      return !!this.query
+    }
   },
 
   mounted() {
     this.$refs.search.focus()
+
+    const WIDTH_THRESHOLD = 1024
+    const widthQuery = window.matchMedia(`(max-width: ${WIDTH_THRESHOLD}px)`)
+
+    widthQuery.addListener(e => this.setMobilePlaceholder(e.matches))
+
+    this.setMobilePlaceholder(window.innerWidth < WIDTH_THRESHOLD)
   },
 
   methods: {
-    search: _.debounce(function() {
-      SearchService.findByAddress(this.query).then(response =>
-        this.changePage('wallet', { address: response.account.address })
-      ).catch(e => console.log(e.message || e.data.error))
+    async search() {
+      if (!this.query) {
+        return
+      }
 
-      SearchService.findByUsername(this.query).then(response =>
-        this.changePage('wallet', { address: response.delegate.address })
-      ).catch(e => console.log(e.message || e.data.error))
+      this.nothingFound = false
+      this.searchCount = 0
+      this.query = this.query.trim()
 
-      SearchService.findByPublicKey(this.query).then(response =>
-        this.changePage('wallet', { address: response.delegate.address })
-      ).catch(e => console.log(e.message || e.data.error))
+      const address = this.findByNameInKnownWallets(this.query)
+      if (address) {
+        this.changePage('wallet', { address: address })
+        return
+      } else {
+        this.updateSearchCount({ message: 'No known wallet with that name could be found' })
+      }
 
-      SearchService.findByBlockId(this.query).then(response =>
-        this.changePage('block', { id: response.block.id })
-      ).catch(e => console.log(e.message || e.data.error))
+      const del = this.delegates.find(d => d.username === this.query.toLowerCase())
+      if (del) {
+        this.changePage('wallet', { address: del.address })
+        return
+      } else {
+        this.updateSearchCount({ message: 'No delegate with that username could be found' });
+      }
 
-      SearchService.findByTransactionId(this.query).then(response =>
-        this.changePage('transaction', { id: response.transaction.id })
-      ).catch(e => console.log(e.message || e.data.error))
-    }, 250),
+      try {
+        const responseAddress = await SearchService.findByAddress(this.query)
+        this.changePage('wallet', { address: responseAddress.account.address })
+        return
+      } catch(e) { this.updateSearchCount(e) }
+
+      try {
+        const responseUsername = await SearchService.findByUsername(this.query)
+        this.changePage('wallet', { address: responseUsername.delegate.address })
+        return
+      } catch(e) { this.updateSearchCount(e) }
+
+      try {
+        const responsePublicKey = await SearchService.findByPublicKey(this.query)
+        this.changePage('wallet', { address: responsePublicKey.delegate.address })
+        return
+      } catch(e) { this.updateSearchCount(e) }
+
+      try {
+        const responseBlock = await SearchService.findByBlockId(this.query)
+        this.changePage('block', { id: responseBlock.block.id })
+        return
+      } catch(e) { this.updateSearchCount(e) }
+
+      try {
+        const responseTransaction = await SearchService.findByTransactionId(this.query)
+        this.changePage('transaction', { id: responseTransaction.transaction.id })
+        return
+      } catch(e) { this.updateSearchCount(e) }
+    },
+
+    updateSearchCount(err) {
+      if (err !== null) {
+        console.log(err.message || err.data.error)
+      }
+
+      // Increment counter to keep track of whether we found anything
+      this.searchCount += 1
+      if (this.searchCount === 7) { // Should match total amount of callbacks
+        this.nothingFound = true
+        setTimeout(() => (this.nothingFound = false), 1500)
+      }
+    },
+
+    setMobilePlaceholder(showMobile) {
+      this.placeholder = showMobile
+        ? this.$i18n.t('Search')
+        : this.$i18n.t('Find a block, transaction, address or delegate')
+    },
 
     changePage(name, params) {
       this.$router.push({ name, params })
       this.$store.dispatch('ui/setHeaderType', null)
+    },
+
+    findByNameInKnownWallets(name) {
+      if (name !== null) {
+        for (const address in this.knownWallets) {
+          if (this.knownWallets.hasOwnProperty(address)) {
+            if (name.toLowerCase() === this.knownWallets[address].toLowerCase()) {
+              return address
+            }
+          }
+        }
+      }
     },
   },
 }
@@ -72,7 +159,9 @@ export default {
 .search-input::placeholder {
   color: var(--color-theme-text-placeholder);
 }
-.search-icon:hover {
+
+.search-icon:hover:enabled {
   box-shadow: 0 0 13px 2px rgba(197, 197, 213, 0.24);
+  cursor: pointer;
 }
 </style>

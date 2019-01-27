@@ -1,26 +1,20 @@
 <template>
   <div class="max-w-2xl mx-auto md:pt-5">
-    <content-header>Delegate Monitor</content-header>
+    <content-header>{{ $t("Delegate Monitor") }}</content-header>
 
-    <delegate-detail></delegate-detail>
+    <delegate-detail :delegateCount="delegateCount"></delegate-detail>
 
-    <section class="page-section py-8">
+    <section class="page-section py-5 md:py-10">
       <nav class="mx-5 sm:mx-10 mb-4 border-b flex items-end">
         <div
           @click="activeTab = 'active'"
-          :class="[
-            activeTab === 'active' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-primary hover:border-brown'
-          ]">
-          Active
+          :class="activeTab === 'active' ? 'active-tab' : 'inactive-tab'">
+          {{ $t("Active") }}
         </div>
         <div
           @click="activeTab = 'standby'"
-          :class="[
-            activeTab === 'standby' ? 'text-lg sm:text-2xl border-brown text-theme-text-primary' : 'sm:text-lg text-theme-text-secondary border-transparent',
-            'mr-4 py-4 px-2 cursor-pointer border-b-3 hover:text-theme-text-primary hover:border-brown'
-          ]">
-          Standby
+          :class="activeTab === 'standby' ? 'active-tab' : 'inactive-tab'">
+          {{ $t("Standby") }}
         </div>
       </nav>
 
@@ -49,30 +43,28 @@ export default {
   },
 
   data: () => ({
-    delegates: [],
-    activeTab: 'active',
-    timer: null,
+    delegates: null,
+    delegateCount: 0,
+    activeTab: 'active'
   }),
 
-  mounted() {
-    this.getDelegates().then(() => this.initialiseTimer())
+  async mounted() {
+    await this.prepareComponent()
   },
 
   methods: {
-    getDelegates() {
-      return DelegateService.activeDelegates().then(
-        response => (this.delegates = response)
-      )
+    async prepareComponent() {
+      await this.getDelegates()
+
+      this.$store.watch(state => state.network.height, value => this.getDelegates())
     },
 
-    initialiseTimer() {
-      this.timer = setInterval(this.getDelegates, 8 * 1000)
-    },
-  },
-
-  beforeDestroy() {
-    clearInterval(this.timer)
-  },
+    async getDelegates() {
+      const response = await DelegateService.activeDelegates()
+      this.delegates = response.delegates
+      this.delegateCount = response.delegateCount
+    }
+  }
 }
 </script>
 

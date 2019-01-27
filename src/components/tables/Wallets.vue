@@ -1,29 +1,34 @@
 <template>
-  <table-component :data="wallets" :show-filter="false" :show-caption="false" table-class="w-full">
-    <table-column :sortable="false" show="index" label="Rank" header-class="left-header-start-cell" cell-class="left-start-cell w-24">
-      <template slot-scope="row">
-        {{ getRank(row.vueTableComponentInternalRowId) }}
-      </template>
-    </table-column>
+  <loader :data="wallets">
+    <table-component v-if="wallets && wallets.length > 0" :data="wallets" :show-filter="false" :show-caption="false" table-class="w-full">
+      <table-column show="vueTableComponentInternalRowId" :label="$t('Rank')" header-class="left-header-start-cell w-32" cell-class="left-start-cell">
+        <template slot-scope="row">
+          {{ getRank(row.vueTableComponentInternalRowId) }}
+        </template>
+      </table-column>
 
-    <table-column show="address" label="Address" header-class="left-header-cell" cell-class="left-cell">
-      <template slot-scope="row">
-        <link-wallet :address="row.address"></link-wallet>
-      </template>
-    </table-column>
+      <table-column show="address" :label="$t('Address')" header-class="left-header-cell" cell-class="left-cell">
+        <template slot-scope="row">
+          <link-wallet :address="row.address" :trunc="false"></link-wallet>
+        </template>
+      </table-column>
 
-    <table-column show="balance" label="Balance" header-class="right-header-cell" cell-class="right-cell">
-      <template slot-scope="row">
-        {{ readableCrypto(row.balance) }}
-      </template>
-    </table-column>
+      <table-column show="balance" :label="$t('Balance')" header-class="right-header-cell" cell-class="right-cell">
+        <template slot-scope="row">
+          {{ readableCrypto(row.balance) }}
+        </template>
+      </table-column>
 
-    <table-column :sortable="false" show="supply" label="Supply" header-class="right-header-end-cell" cell-class="right-end-cell w-24">
-      <template slot-scope="row">
-        {{ readableNumber((row.balance / supply) * 100) }}%
-      </template>
-    </table-column>
-  </table-component>
+      <table-column :sortable="false" show="supply" :label="$t('Supply')" header-class="right-header-end-cell" cell-class="right-end-cell w-24">
+        <template slot-scope="row">
+          {{ readableNumber((row.balance / total) * 100) }}%
+        </template>
+      </table-column>
+    </table-component>
+    <div v-else class="px-5 md:px-10">
+      <span>{{ $t("No results") }}</span>
+    </div>
+  </loader>
 </template>
 
 <script type="text/ecmascript-6">
@@ -32,9 +37,13 @@ import { mapGetters } from 'vuex'
 export default {
   props: {
     wallets: {
-      type: Array,
-      required: true,
+      // type: Array or null
+      required: true
     },
+    total: {
+      type: Number,
+      required: true
+    }
   },
 
   computed: {

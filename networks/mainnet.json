@@ -3,6 +3,7 @@
   "server": "https://api.kapunode.net/api",
   "alias": "Main",
   "activeDelegates": 51,
+  "rewardOffset": 75600,
   "currencies": {
     "AUD": "A$",
     "BRL": "R$",
@@ -13,7 +14,6 @@
     "ETH": "Ξ",
     "EUR": "€",
     "GBP": "£",
-    "INR": "₹",
     "JPY": "¥",
     "KRW": "₩",
     "LTC": "Ł",
@@ -22,18 +22,15 @@
     "USD": "$"
   },
   "knownWallets": {
-    "KDn3WyMCHzfhtpzaiUmb4GJLyFPrcaF5Kn": "Reserve",
-    "KJQNgePukpFY3dzT5SVibF57TdFYtgw6qA": "ARK Team",
-    "KViFSsTzbszDcaJ1CVr5F7XwqMnBMFmw4q": "gsilvestri",
-    "KGg1nGgqqbLyoPkvkvE2NySYRRo35sZ1Bf": "gsilvestri"
+    "KDWdr9yLfnCA2doT71qAP7uLFM6uiXgg8n": "reserve"
   },
   "defaults": {
+    "token": "KAPU",
+    "symbol": "ʞ",
     "currency": {
       "name": "USD",
       "symbol": "$"
-    }
-  },
-  "config": {
-    "priceChart": false
+    },
+    "priceChart": true
   }
 }

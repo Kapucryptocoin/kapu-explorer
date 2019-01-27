@@ -1,26 +1,31 @@
 <template>
   <div>
-    <div v-for="(row, index) in wallets" :key="row.address" class="row-mobile">
-      <div class="list-row-border-b">
-        <div>Rank</div>
-        <div>{{ getRank(index) }}</div>
-      </div>
+    <loader :data="wallets">
+      <div v-for="(row, index) in wallets" :key="row.address" class="row-mobile">
+        <div class="list-row-border-b">
+          <div>{{ $t("Rank") }}</div>
+          <div>{{ getRank(index) }}</div>
+        </div>
 
-      <div class="list-row-border-b">
-        <div>Address</div>
-        <link-wallet :address="row.address"></link-wallet>
-      </div>
+        <div class="list-row-border-b">
+          <div>{{ $t("Address") }}</div>
+          <link-wallet :address="row.address"></link-wallet>
+        </div>
 
-      <div class="list-row-border-b">
-        <div>Balance</div>
-        <div>{{ readableCrypto(row.balance) }}</div>
-      </div>
+        <div class="list-row-border-b">
+          <div>{{ $t("Balance") }}</div>
+          <div>{{ readableCrypto(row.balance) }}</div>
+        </div>
 
-      <div class="list-row">
-        <div>Supply</div>
-        <div>{{ readableNumber((row.balance / supply) * 100) }}%</div>
+        <div class="list-row">
+          <div>{{ $t("Supply") }}</div>
+          <div>{{ readableNumber((row.balance / total) * 100) }}%</div>
+        </div>
       </div>
-    </div>
+      <div v-if="wallets && !wallets.length" class="px-5 md:px-10">
+        <span>{{ $t("No results") }}</span>
+      </div>
+    </loader>
   </div>
 </template>
 
@@ -30,8 +35,12 @@ import { mapGetters } from 'vuex'
 export default {
   props: {
     wallets: {
-      type: Array,
+      // type: Array or null
       required: true,
+    },
+    total: {
+      type: Number,
+      required: true
     },
   },
 

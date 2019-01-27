@@ -30,6 +30,7 @@
   --chart-inactive: #a0a6c8;
   --theme-button: #f9ead5;
   --theme-button-text: #AB8B64;
+  --language-icon: #395174;
 }
 
 .theme-light footer a {
@@ -65,6 +66,7 @@
   --chart-inactive: #585a68;
   --theme-button: #2a2b31;
   --theme-button-text: #fff;
+  --language-icon: #a1a2a6;
 }
 
 .theme-dark footer a {
@@ -93,6 +95,10 @@ a:hover {
   color: #F57C00;
 }
 
+.transition {
+  transition: all .1s ease-in
+}
+
 table {
   border-spacing: 0;
   border-collapse: collapse;
@@ -104,6 +110,11 @@ button:focus,
 textarea:focus,
 input:focus {
   outline: none;
+}
+
+button:disabled {
+  cursor: default;
+  color: #838a9b !important;
 }
 
 .semibold {
@@ -127,14 +138,23 @@ hr {
   height: 1px;
 }
 
+.margin-t-2 {
+  margin-top: 2px;
+}
+
 /** Tables */
+
+tbody tr {
+  @apply .transition
+}
 
 tbody tr:nth-child(even) {
   background-color: var(--color-theme-table-row);
 }
 
 tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0);
+/*  background-color: rgba(0, 0, 0, 0);*/
+  background-color: var(--color-theme-table-row-hover);
   transform: scale(1.015);
   box-shadow: var(--theme-table-hover-shadow);
   z-index: 999;
@@ -172,6 +192,12 @@ thead th {
   z-index: 10;
 }
 
+@screen md {
+  thead th {
+    top: 80px;
+  }
+}
+
 /** Table Arrows*/
 
 .table-component__th--sort-asc,
@@ -198,7 +224,7 @@ thead th {
 
 
 .show-more-button {
-  @apply .mx-auto .bg-theme-button .text-theme-button-text .semibold .py-5 .px-8 .border-transparent .rounded
+  @apply .mx-auto .bg-theme-button .text-theme-button-text .semibold .py-5 .px-8 .border-transparent .rounded .transition
 }
 
 .show-more-button:hover {
@@ -267,6 +293,97 @@ thead th {
   @apply .list-row .border-b
 }
 
+.list-row-border-t {
+  @apply .list-row .border-t
+}
+
+.list-row-border-b-no-wrap {
+  @apply .list-row-border-b .flex-no-wrap;
+}
+
 .row-mobile {
   @apply .px-5 .py-4
+}
+
+.base-tab {
+  @apply .mr-4 .py-4 .px-2 .cursor-pointer .border-b-3
+}
+
+.active-tab {
+  @apply .base-tab .text-lg .border-blue .text-theme-text-primary .transition
+}
+
+.inactive-tab {
+  @apply .base-tab .text-theme-text-secondary .border-transparent .transition
+}
+
+.active-tab:hover,
+.inactive-tab:hover {
+  @apply .text-theme-text-primary .border-blue
+}
+
+@screen sm {
+  .active-tab {
+    @apply .text-2xl
+  }
+
+  .inactive-tab {
+    @apply .text-lg
+  }
+}
+
+/* Chart */
+
+.chart-tab {
+  @apply .py-2 .px-4 .bg-transparent .rounded-md .text-blue-light .font-normal .text-xs
+}
+
+.chart-tab-active, .chart-tab:hover {
+  @apply .bg-blue-darker .text-white
+}
+
+/* Pager */
+
+.pager-button {
+  @apply .bg-theme-button .text-theme-button-text .semibold .py-5 .px-8 .border-transparent .rounded .transition .cursor-pointer
+}
+
+.pager-button:enabled:hover,
+.block-pager-button:enabled:hover {
+  @apply .bg-blue .text-white .hover-button-shadow-definition
+}
+
+.block-pager-button {
+  @apply .py-4 .px-5 .bg-transparent .bg-blue-darker .rounded-md .text-white .font-normal .text-xs .transition
+}
+
+/** Menu */
+
+.menu-button {
+  @apply .flex .items-center .p-4 .border-b-2 .border-transparent .margin-t-2 .text-theme-text-secondary .transition
+}
+
+.menu-button:hover {
+  @apply .border-red
+}
+
+/** Dropdown */
+
+.dropdown-button {
+  @apply .flex .items-center .p-4 .text-theme-text-secondary .transition .cursor-pointer
+}
+
+.dropdown-button:hover {
+  color: #1461ff;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/** Configuration */
+
+.flag-image {
+  width: 20px;
+  height: 20px;
 }
