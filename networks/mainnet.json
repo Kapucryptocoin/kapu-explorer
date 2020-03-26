@@ -1,6 +1,6 @@
 {
   "title": "KAPU Explorer",
-  "server": "https://api.kapunode.net/api",
+  "server": "https://api.kapu.one/api",
   "alias": "Main",
   "activeDelegates": 51,
   "rewardOffset": 75600,
